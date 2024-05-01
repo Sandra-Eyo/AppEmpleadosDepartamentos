@@ -250,6 +250,32 @@ public class Main {
         }
     }
 
+    public static void consultarDepartamentoLocalidadEmpleado(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el DNI del empleado para ver el nombre del departamento y la localidad:");
+            String dni_empleado = sc.nextLine();
+
+            // Consultar el nombre del departamento y la localidad del empleado
+            ResultSet rs = sentencia.executeQuery("SELECT Dnombre, Localidad FROM Departamentos INNER JOIN Empleados ON Departamentos.Nu_dept = Empleados.Nu_dept WHERE Empleados.Dni = '" + dni_empleado + "'");
+            if (!rs.next()) {
+                System.out.println("No se encontró ningún empleado con el DNI especificado.");
+                return;
+            }
+
+            // Mostrar el nombre del departamento y la localidad del empleado
+            String nombre_departamento = rs.getString("Dnombre");
+            String localidad = rs.getString("Localidad");
+            System.out.println("Nombre del departamento asignado: " + nombre_departamento);
+            System.out.println("Localidad del departamento asignado: " + localidad);
+
+        } catch (SQLException e) {
+            System.out.println("Error al consultar el departamento y la localidad del empleado: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
 
 
 }
