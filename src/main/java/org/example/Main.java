@@ -319,5 +319,35 @@ public class Main {
         }
     }
 
+    public static void modificarLocalidadDepartamento(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el nombre del departamento para modificar su localidad:");
+            String nombre_departamento = sc.nextLine();
+
+            // Verificar si el departamento existe
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Departamentos WHERE Dnombre = '" + nombre_departamento + "'");
+            if (!rs.next()) {
+                System.out.println("No se encontró ningún departamento con el nombre especificado.");
+                return;
+            }
+
+            // Solicitar al usuario la nueva localidad
+            System.out.println("Introduce la nueva localidad:");
+            String nueva_localidad = sc.nextLine();
+
+            // Actualizar la localidad del departamento
+            String query = "UPDATE Departamentos SET Localidad = '" + nueva_localidad + "' WHERE Dnombre = '" + nombre_departamento + "'";
+            sentencia.executeUpdate(query);
+
+            System.out.println("Localidad del departamento modificada correctamente.");
+
+        } catch (SQLException e) {
+            System.out.println("Error al modificar la localidad del departamento: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
 
 }
