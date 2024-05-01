@@ -106,4 +106,53 @@ public class Main {
         }
     }
 
+    public static void insertarEmpleado(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el DNI del empleado:");
+            String dni = sc.nextLine();
+
+            System.out.println("Introduce el nombre del empleado:");
+            String nombre = sc.nextLine();
+
+            System.out.println("Introduce los estudios del empleado:");
+            String estudios = sc.nextLine();
+
+            System.out.println("Introduce la dirección del empleado:");
+            String direccion = sc.nextLine();
+
+            System.out.println("Introduce la fecha de alta del empleado (YYYY-MM-DD):");
+            String fecha_alta = sc.nextLine();
+
+            System.out.println("Introduce el salario del empleado:");
+            int salario = sc.nextInt();
+
+            System.out.println("Introduce la comisión del empleado:");
+            int comision = sc.nextInt();
+
+            System.out.println("Introduce el número del departamento del empleado:");
+            String num_departamento = sc.next();
+
+            // Verificar si el departamento existe
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Departamentos WHERE Nu_dept = '" + num_departamento + "'");
+            if (!rs.next()) {
+                System.out.println("El departamento especificado no existe. Por favor, inserta un número de departamento válido.");
+                return;
+            }
+
+            // Insertar el empleado
+            String query = "INSERT INTO Empleados (Dni, Nombre, Estudios, Dir, Fecha_alt, Salario, Comision, Nu_dept) VALUES ('" + dni + "', '" + nombre + "', '" + estudios + "', '" + direccion + "', '" + fecha_alta + "', " + salario + ", " + comision + ", '" + num_departamento + "')";
+            sentencia.executeUpdate(query);
+
+            System.out.println("Empleado insertado correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el empleado: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+
+
+
 }
