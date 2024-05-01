@@ -206,6 +206,50 @@ public class Main {
         }
     }
 
+    public static void consultarEmpleadosDepartamento(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el nombre del departamento para ver los datos de los empleados:");
+            String nombre_departamento = sc.nextLine();
+
+            // Obtener el número de departamento basado en el nombre
+            ResultSet rsNumeroDepartamento = sentencia.executeQuery("SELECT Nu_dept FROM Departamentos WHERE Dnombre = '" + nombre_departamento + "'");
+            if (!rsNumeroDepartamento.next()) {
+                System.out.println("El departamento especificado no existe.");
+                return;
+            }
+            int num_departamento = rsNumeroDepartamento.getInt("Nu_dept");
+
+            // Consultar los empleados del departamento
+            ResultSet rsEmpleados = sentencia.executeQuery("SELECT * FROM Empleados WHERE Nu_dept = " + num_departamento);
+            if (!rsEmpleados.next()) {
+                System.out.println("No hay empleados en el departamento especificado.");
+                return;
+            }
+
+            // Mostrar los datos de los empleados
+            System.out.println("Datos de los empleados en el departamento '" + nombre_departamento + "':");
+            System.out.println("---------------------------------------------------");
+            do {
+                System.out.println("DNI: " + rsEmpleados.getString("Dni"));
+                System.out.println("Nombre: " + rsEmpleados.getString("Nombre"));
+                System.out.println("Estudios: " + rsEmpleados.getString("Estudios"));
+                System.out.println("Dirección: " + rsEmpleados.getString("Dir"));
+                System.out.println("Fecha de alta: " + rsEmpleados.getDate("Fecha_alt"));
+                System.out.println("Salario: " + rsEmpleados.getInt("Salario"));
+                System.out.println("Comisión: " + rsEmpleados.getInt("Comision"));
+                System.out.println("Número de departamento: " + rsEmpleados.getString("Nu_dept"));
+                System.out.println("----------------------------------------");
+            } while (rsEmpleados.next());
+
+        } catch (SQLException e) {
+            System.out.println("Error al consultar los empleados del departamento: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+
 
 
 }
