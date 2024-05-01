@@ -56,7 +56,7 @@ public class Main {
 
             switch (op) {
                 case 1:
-                    (sentencia);
+                    insertarDepartamento(sentencia);
                     break;
                 case 2:
                     (sentencia);
@@ -84,4 +84,26 @@ public class Main {
         } while (op != 9);
 
     }
+
+    public static void insertarDepartamento(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el nombre del departamento:");
+            String nombre = sc.nextLine();
+
+            System.out.println("Introduce la localidad del departamento:");
+            String localidad = sc.nextLine();
+
+            String query = "INSERT INTO Departamentos (Dnombre, Localidad) VALUES ('" + nombre + "', '" + localidad + "')";
+            sentencia.executeUpdate(query);
+
+            System.out.println("Departamento insertado correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el departamento: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+
 }
