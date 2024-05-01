@@ -1,9 +1,6 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
@@ -153,6 +150,31 @@ public class Main {
         }
     }
 
+    public static void borrarEmpleado(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el DNI del empleado que deseas borrar:");
+            String dni = sc.nextLine();
+
+            // Verificar si el empleado existe
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Empleados WHERE Dni = '" + dni + "'");
+            if (!rs.next()) {
+                System.out.println("El empleado con el DNI especificado no existe.");
+                return;
+            }
+
+            // Borrar el empleado
+            String query = "DELETE FROM Empleados WHERE Dni = '" + dni + "'";
+            sentencia.executeUpdate(query);
+
+            System.out.println("Empleado borrado correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al borrar el empleado: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
 
 
 }
