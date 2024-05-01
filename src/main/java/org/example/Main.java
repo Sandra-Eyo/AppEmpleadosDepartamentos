@@ -277,5 +277,47 @@ public class Main {
         }
     }
 
+    public static void modificarSalarioComisionEmpleado(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el DNI del empleado para modificar su salario o comisión:");
+            String dni_empleado = sc.nextLine();
+
+            // Verificar si el empleado existe
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Empleados WHERE Dni = '" + dni_empleado + "'");
+            if (!rs.next()) {
+                System.out.println("No se encontró ningún empleado con el DNI especificado.");
+                return;
+            }
+
+            // Solicitar al usuario qué desea modificar
+            System.out.println("¿Qué desea modificar?\n[1] Salario\n[2] Comisión");
+            int opcion = sc.nextInt();
+            sc.nextLine(); // Consumir el salto de línea
+
+            if (opcion != 1 && opcion != 2) {
+                System.out.println("Opción no válida.");
+                return;
+            }
+
+            String columnaModificar = (opcion == 1) ? "Salario" : "Comision";
+
+            System.out.println("Introduce el nuevo valor:");
+            int nuevo_valor = sc.nextInt();
+
+            // Actualizar el salario o la comisión del empleado
+            String query = "UPDATE Empleados SET " + columnaModificar + " = " + nuevo_valor + " WHERE Dni = '" + dni_empleado + "'";
+            sentencia.executeUpdate(query);
+
+            System.out.println("Salario o comisión del empleado modificado correctamente.");
+
+        } catch (SQLException e) {
+            System.out.println("Error al modificar el salario o la comisión del empleado: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+
 
 }
