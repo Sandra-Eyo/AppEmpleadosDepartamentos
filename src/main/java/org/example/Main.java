@@ -39,14 +39,14 @@ public class Main {
 
         do {
             System.out.println("**** MENU ****\n"
-                    + "[1] Insertar un nuevo departamento"
-                    + "[2] Insertar un nuevo empleado"
-                    + "[3] Borrar empleado"
-                    + "[4] Borrar departamento"
-                    + "[5] Consultar empleados de un departamento"
-                    + "[6] Consultar nombre de un departamento y localidad con el dni de un empleado"
-                    + "[7] Modificar salario o comisión de un empleado con su DNI"
-                    + "[8] Modificar nombre departamento a través de su localidad"
+                    + "[1] Insertar un nuevo departamento\n"
+                    + "[2] Insertar un nuevo empleado\n"
+                    + "[3] Borrar empleado\n"
+                    + "[4] Borrar departamento\n"
+                    + "[5] Consultar empleados de un departamento\n"
+                    + "[6] Consultar nombre de un departamento y localidad con el dni de un empleado\n"
+                    + "[7] Modificar salario o comisión de un empleado con su DNI\n"
+                    + "[8] Modificar nombre departamento a través de su localidad\n"
                     + "[9] Salir");
             op = sc.nextInt();
             sc.nextLine();
@@ -56,25 +56,25 @@ public class Main {
                     insertarDepartamento(sentencia);
                     break;
                 case 2:
-                    (sentencia);
+                    insertarEmpleado(sentencia);
                     break;
                 case 3:
-                    (sentencia);
+                    borrarEmpleado(sentencia);
                     break;
                 case 4:
-                    (sentencia);
+                    borrarDepartamento(sentencia);
                     break;
                 case 5:
-                    (sentencia);
+                    consultarEmpleadosDepartamento(sentencia);
                     break;
                 case 6:
-                    (sentencia);
+                    consultarDepartamentoLocalidadEmpleado(sentencia);
                     break;
                 case 7:
-                    (sentencia);
+                    modificarSalarioComisionEmpleado(sentencia);
                     break;
                 case 8:
-                    (sentencia);
+                    modificarLocalidadDepartamento(sentencia);
                     break;
             }
 

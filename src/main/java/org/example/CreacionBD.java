@@ -16,6 +16,12 @@ public class CreacionBD {
             sentencia.execute("CREATE DATABASE IF NOT EXISTS " + bd + ";");
             sentencia.execute("USE "+ bd +";");
 
+            // Creación de la tabla Departamentos:
+            sentencia.execute("CREATE TABLE IF NOT EXISTS Departamentos ("
+                    + "Nu_dept INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "Dnombre VARCHAR(10) UNIQUE,"
+                    + "Localidad VARCHAR(10))");
+
             // Creación de la tabla Empleados:
             sentencia.execute("CREATE TABLE IF NOT EXISTS Empleados ("
                     + "Dni VARCHAR(9) PRIMARY KEY,"
@@ -25,14 +31,8 @@ public class CreacionBD {
                     + "Fecha_alt DATE,"
                     + "Salario INT,"
                     + "Comision INT,"
-                    + "Nu_dept VARCHAR(2),"
+                    + "Nu_dept INT,"
                     + "FOREIGN KEY (Nu_dept) REFERENCES Departamentos(Nu_dept))");
-
-            // Creación de la tabla Departamentos:
-            sentencia.execute("CREATE TABLE IF NOT EXISTS Departamentos ("
-                    + "Nu_dept INT AUTO_INCREMENT PRIMARY KEY,"
-                    + "Dnombre VARCHAR(10) UNIQUE,"
-                    + "Localidad VARCHAR(10))");
         }
         catch(SQLException e)
         {
