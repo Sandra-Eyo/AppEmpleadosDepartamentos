@@ -176,5 +176,36 @@ public class Main {
         }
     }
 
+    public static void borrarDepartamento(Statement sentencia) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.println("Introduce el número del departamento que deseas borrar:");
+            int num_departamento = sc.nextInt();
+
+            // Verificar si el departamento existe
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Departamentos WHERE Nu_dept = " + num_departamento);
+            if (!rs.next()) {
+                System.out.println("El departamento especificado no existe.");
+                return;
+            }
+
+            // Borrar los empleados relacionados con el departamento
+            String queryBorrarEmpleados = "DELETE FROM Empleados WHERE Nu_dept = " + num_departamento;
+            sentencia.executeUpdate(queryBorrarEmpleados);
+
+            // Borrar el departamento
+            String queryBorrarDepartamento = "DELETE FROM Departamentos WHERE Nu_dept = " + num_departamento;
+            sentencia.executeUpdate(queryBorrarDepartamento);
+
+            System.out.println("Departamento y empleados relacionados borrados correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al borrar el departamento: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+
+
 
 }
